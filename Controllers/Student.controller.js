@@ -15,10 +15,10 @@ const createStudent = async (req, res) => {
             },
         });
 
-        res.status(201).json(student);
+        return res.status(201).json(student);
     } catch (error) {
-        res.status(500).json({ error: error.message });
         console.log(error);
+        return res.status(500).json({ error: error.message });
     }
 };
 
@@ -33,10 +33,9 @@ const getStudentById = async (req, res) => {
         if (!student) {
             return res.status(404).json({ error: "Student not found" });
         }
-
-        res.json(student);
+        return res.status(200).json(student);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+       return res.status(500).json({ error: error.message });
     }
 };
 
@@ -57,9 +56,9 @@ const updateStudent = async (req, res) => {
             },
         });
 
-        res.json(updatedStudent);
+        return res.status(200).json(updatedStudent);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+       return res.status(500).json({ error: error.message });
     }
 };
 
@@ -70,9 +69,9 @@ const getAllStudents = async (req, res) => {
         if (!students || students.length === 0) {
             return res.status(404).json("No students found");
         }
-        res.json(students);
+       return res.status(200).json(students);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 };
 
@@ -80,14 +79,13 @@ const getAllStudents = async (req, res) => {
 const deleteStudent = async (req, res) => {
     try {
         const { id } = req.params;
-
         await prisma.student.delete({
             where: { id: parseInt(id) },
         });
 
         res.status(204).send();
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 };
 
@@ -107,9 +105,9 @@ const getFilteredStudents = async (req, res) => {
             return res.status(404).json("No students found");
         }
 
-        res.json(students);
+        return res.status(200).json(students);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 };
 
